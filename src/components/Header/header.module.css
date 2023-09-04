@@ -1,0 +1,14 @@
+.header {
+  border-bottom: 1px solid var(--orange-900);
+}
+
+.nav {
+  font-weight: 500;
+  line-height: 3.6rem;
+  letter-spacing: 0.125rem;
+  text-transform: uppercase;
+}
+
+.nav__link {
+  padding: 16px 0;
+}
