@@ -1,0 +1,33 @@
+.movie {
+  margin-bottom: 32px;
+}
+.movie__image {
+  width: 150px;
+  height: 226px;
+  border-radius: 8px;
+}
+
+.movie__imdbImage {
+  margin-right: 4px;
+}
+
+.movie h2 {
+  font-size: 2.4rem;
+  font-weight: 500;
+  line-height: 3.2rem;
+}
+
+.movie p {
+  color: var(--gray-300);
+  line-height: 2.4rem;
+  letter-spacing: 0.5px;
+}
+
+.movie__description {
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  text-justify: justify;
+}
