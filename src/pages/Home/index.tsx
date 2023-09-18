@@ -1,9 +1,14 @@
 import { useEffect, useState } from "react";
 import { Movies } from "../../components/Movies";
 import styles from "./home.module.css";
+import { api } from "../../services/api";
+import { IMovie } from "../../interfaces/movie";
 
+interface IResponse {
+  results: IMovie[];
+}
 export function Home() {
-  const [movies, setMovies] = useState([]);
+  const [movies, setMovies] = useState<IMovie[]>([]);
 
   // get -> pegar os dados
   // post -> cadastrar  dados
@@ -11,20 +16,10 @@ export function Home() {
   // patch -> alterar um dado
   // delete -> deletar um dado
   async function getMovies() {
-    const options = {
-      method: "GET",
-      headers: {
-        accept: "application/json",
-        Authorization:
-          "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI4ZDNlYjY0Nzk5NGY5YThkZThlNzIwNTkzMzEwZTE4MSIsInN1YiI6IjVmNzY5ZDIzZmVhMGQ3MDAzNTE2ZWI1ZSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.A3sKnVdFW1RQPyuUow3CfQqCYCaVhPWY2kmvV5mTEoQ",
-      },
-    };
-    const url =
-      "https://api.themoviedb.org/3/movie/popular?language=pt-BR&page=1&adult=false";
-
     try {
-      const response = await fetch(url, options);
-      const data = await response.json();
+      const { data } = await api.get<IResponse>(
+        "popular?language=pt-BR&page=1&adult=false"
+      );
       setMovies(data.results);
     } catch (e) {
       alert(e);

@@ -1,22 +1,27 @@
 import styles from "./movie.module.css";
 import imdbImage from "../../assets/imdb.png";
 import starImage from "../../assets/star.png";
-export function Movie({ item }) {
-  async function getMovieTrailer(id) {
-    const options = {
-      method: "GET",
-      headers: {
-        accept: "application/json",
-        Authorization:
-          "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI4ZDNlYjY0Nzk5NGY5YThkZThlNzIwNTkzMzEwZTE4MSIsInN1YiI6IjVmNzY5ZDIzZmVhMGQ3MDAzNTE2ZWI1ZSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.A3sKnVdFW1RQPyuUow3CfQqCYCaVhPWY2kmvV5mTEoQ",
-      },
-    };
-    const url = `https://api.themoviedb.org/3/movie/${id}/videos?language=pt-BR`;
+import { api } from "../../services/api";
+import { IMovie } from "../../interfaces/movie";
+interface IMovieProps {
+  item: IMovie;
+}
+interface IMovieTrailer {
+  key: string;
+}
+interface IResponse {
+  results: IMovieTrailer[];
+}
+export function Movie({ item }: IMovieProps) {
+  async function getMovieTrailer(id: string) {
     try {
-      const response = await fetch(url, options);
-      const data = await response.json();
-      const selectedVideo = data.results.length - 1;
-      const urlVideo = `https://www.youtube.com/watch?v=${data.results[selectedVideo].key}`;
+      const { data } = await api.get<IResponse>(`${id}/videos?language=pt-BR`);
+      const selectedVideo = data.results.at(-1);
+      if (!selectedVideo) {
+        alert("Não existe Trailer");
+        return;
+      }
+      const urlVideo = `https://www.youtube.com/watch?v=${selectedVideo.key}`;
       window.open(urlVideo, "_blank");
     } catch (e) {
       alert(e);

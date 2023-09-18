@@ -1,6 +1,9 @@
+import { IMovie } from "../../interfaces/movie";
 import { Movie } from "../Movie";
-
-export function Movies({ list }) {
+interface IMoviesProps {
+  list: IMovie[];
+}
+export function Movies({ list }: IMoviesProps) {
   return (
     <section>
       {list.length > 0 &&
